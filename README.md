@@ -1,134 +1,157 @@
-# Lanyon
+# Hugo-Primer
 
-Lanyon is an unassuming [Jekyll](http://jekyllrb.com) theme that places content first by tucking away navigation in a hidden drawer. It's based on [Poole](http://getpoole.com), the Jekyll butler.
+**A simple and beautiful Hugo theme based on GitHub's Primer CSS** | **[日本語記事](https://qqhann.dev/blog/theer-stroy/)**
 
-![Lanyon](https://f.cloud.github.com/assets/98681/1825266/be03f014-71b0-11e3-9539-876e61530e24.png)
-![Lanyon with open sidebar](https://f.cloud.github.com/assets/98681/1825267/be04a914-71b0-11e3-966f-8afe9894c729.png)
+This theme would be a perfect fit if you are used to GitHub style pages.  
+Hugo-Primer is a theme based on GitHub style css: Primer, and adds some blog like features onto it.
 
+Try it now, and leave me a star if you like it!
 
-## Contents
+![screenshot](https://github.com/qqhann/hugo-primer/blob/master/images/screenshot.png)
 
-- [Usage](#usage)
-- [Options](#options)
-  - [Sidebar menu](#sidebar-menu)
-  - [Themes](#themes)
-  - [Reverse layout](#reverse-layout)
-- [Development](#development)
-- [Author](#author)
-- [License](#license)
+## Features
 
+- [x] Primer css like theme
+- [x] Menu bar header
+- [x] Colored code pen
+- [x] Math inline
+- [x] Awesome TOC
+- [x] Tags & Categories
+- [x] Social Share buttons
+
+## Installation
+
+Clone to your theme directory:
+
+```terminal
+git clone https://github.com/qqhann/hugo-primer.git themes/hugo-primer
+
+hugo server --theme=hugo-primer
+```
 
 ## Usage
 
-Lanyon is a theme built on top of [Poole](https://github.com/poole/poole), which provides a fully furnished Jekyll setup—just download and start the Jekyll server. See [the Poole usage guidelines](https://github.com/poole/poole#usage) for how to install and use Jekyll.
+### exampleSite
 
+You can refer to `exampleSite/` to get started.
+Reading `exampleSite/_index.md` is good too.
 
-## Options
+For a quick start:
 
-Lanyon includes some customizable options, typically applied via classes on the `<body>` element.
-
-
-### Sidebar menu
-
-Create a list of nav links in the sidebar by assigning each Jekyll page the correct layout in the page's [front-matter](http://jekyllrb.com/docs/frontmatter/).
-
+```sh
+cp -av themes/hugo-primer/exampleSite/* .
 ```
+
+### Customizing
+
+#### config.toml
+
+You can configure Hugo-Primer behavior with these params in your blog's `config.toml`. Shown are defaults and most recommended configs.
+
+```config.toml
+# config.toml
+
+hasCJKLanguage = true
+# Code pen
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+
+# Enter a copyright notice to display in the site footer.
+# To display a copyright symbol, type `&copy;`.
+copyright = ""
+
+[params]
+# Chose Social Sharing Buttons you want to use.
+shareTo = ["Twitter", "Hatena", "Facebook", "Pocket"]
+# You may disable copyright sentence by setting this to false.
+showFooterCredits = true
+```
+
+That being said, below is all recommended configuration example.
+
+```config.toml
+# config.toml
+
+baseURL = "https://your_web_site"
+title = "Your Blog"
+theme = "hugo-primer"
+languageCode = "ja"
+# If you are using Chinese, Japanese, or Korean, I highly recommend you to set this true.
+hasCJKLanguage = true
+summaryLength = 70
+# Code pen
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+googleAnalytics = "U-12345678-0"
+
+# Enter a copyright notice to display in the site footer.
+# To display a copyright symbol, type `&copy;`.
+copyright = "&copy;Your Name 2019"
+
+[frontmatter]
+# update sitemap.xml's lastmod datetime by file change time, instead of git.
+lastmod = ["lastmod", ":fileModTime", ":default"]
+
+[params]
+description = "Describe what your web page is about"
+twitter = "your_twitter_id"
+# You can use favicon by addin them manually.
+useIcon = true
+useTwitterCard = true
+# Use MathJax.js. Disabling site-wide and you still can enable in indivisual pages
+math = true
+
+shareTo = ["Twitter", "Hatena", "Facebook", "Pocket"]
+showFooterCredits = true
+```
+
+#### archetypes/default.md
+
+It is also recommended to remove your site's `archetypes/default.md`, or copy Hugo-Primer's `archetypes/default.md` to your site.
+
+```archetypes/default.md
 ---
-layout: page
-title: About
+title: "{{ replace .Name "-" " " | title }}"
+date: {{ .Date }}
+draft: true
+categories:
+tags:
+keywords:
 ---
 ```
 
-**Why require a specific layout?** Jekyll will return *all* pages, including the `atom.xml`, and with an alphabetical sort order. To ensure the first link is *Home*, we exclude the `index.html` page from this list by specifying the `page` layout.
+Example usage:
 
-
-### Themes
-
-Lanyon ships with eight optional themes based on the [base16 color scheme](https://github.com/chriskempson/base16). Apply a theme to change the color scheme (mostly applies to sidebar and links).
-
-![Lanyon with red theme](https://f.cloud.github.com/assets/98681/1825270/be065110-71b0-11e3-9ed8-9b8de753a4af.png)
-![Lanyon with red theme and open sidebar](https://f.cloud.github.com/assets/98681/1825269/be05ec20-71b0-11e3-91ea-a9138ef07186.png)
-
-There are eight themes available at this time.
-
-![Available theme classes](https://f.cloud.github.com/assets/98681/1817044/e5b0ec06-6f68-11e3-83d7-acd1942797a1.png)
-
-To use a theme, add any one of the available theme classes to the `<body>` element in the `default.html` layout, like so:
-
-```html
-<body class="theme-base-08">
-  ...
-</body>
+```md
+---
+categories:
+- Diary
+tags:
+- Shopping
+- Health
+---
 ```
 
-To create your own theme, look to the Themes section of [included CSS file](https://github.com/poole/lanyon/blob/master/public/css/lanyon.css). Copy any existing theme (they're only a few lines of CSS), rename it, and change the provided colors.
+Set keywords for seo.
 
+#### ruby annotation
 
-### Reverse layout
+[ruby annotation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ruby) allows you to show pronunciation of characters. Ruby in hugo-primer is like this:
 
-![Lanyon with reverse layout](https://f.cloud.github.com/assets/98681/1825265/be03f2e4-71b0-11e3-89f1-360705524495.png)
-![Lanyon with reverse layout and open sidebar](https://f.cloud.github.com/assets/98681/1825268/be056174-71b0-11e3-88c8-5055bca4307f.png)
+![ruby](https://github.com/qqhann/hugo-primer/blob/master/images/ruby.png)
 
-Reverse the page orientation with a single class.
-
-```html
-<body class="layout-reverse">
-  ...
-</body>
-```
-
-
-### Sidebar overlay instead of push
-
-Make the sidebar overlap the viewport content with a single class:
+You just need one line shortcodes code:
 
 ```html
-<body class="sidebar-overlay">
-  ...
-</body>
+{{< ruby rb="深表遗憾" rt="Xi Wen Le Jian" >}}
+
+{{< ruby rb="My heart is broken." rt="I'm happy for that." >}}
 ```
 
-This will keep the content stationary and slide in the sidebar over the side content. It also adds a `box-shadow` based outline to the toggle for contrast against backgrounds, as well as a `box-shadow` on the sidebar for depth.
+## Contributing
 
-It's also available for a reversed layout when you add both classes:
-
-```html
-<body class="layout-reverse sidebar-overlay">
-  ...
-</body>
-```
-
-### Sidebar open on page load
-
-Show an open sidebar on page load by modifying the `<input>` tag within the `sidebar.html` layout to add the `checked` boolean attribute:
-
-```html
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" checked>
-```
-
-Using Liquid you can also conditionally show the sidebar open on a per-page basis. For example, here's how you could have it open on the homepage only:
-
-```html
-<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" {% if page.title =="Home" %}checked{% endif %}>
-```
-
-## Development
-
-Lanyon has two branches, but only one is used for active development.
-
-- `master` for development.  **All pull requests should be to submitted against `master`.**
-- `gh-pages` for our hosted site, which includes our analytics tracking code. **Please avoid using this branch.**
-
-
-## Author
-
-**Mark Otto**
-- <https://github.com/mdo>
-- <https://twitter.com/mdo>
-
+Issues and PRs are welcome. :)
 
 ## License
 
-Open sourced under the [MIT license](LICENSE.md).
-
-<3
+MIT
